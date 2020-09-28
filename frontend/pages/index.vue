@@ -2,40 +2,73 @@
   <div class="container">
     <div>
       <Logo />
-      <h1 class="title">
-        Vote Candidate Now!
-      </h1>
+      <h1 class="title">Vote Candidate Now!</h1>
       <div class="text-center">
-        <input v-model="candidateName" type="text">
-        {{ candidateName }}
-        <button @click="testServer">
-          test
-        </button>
+        <v-row>
+          <v-col>
+            <v-text-field v-model="plaintext" label="Plain text" />
+            <v-text-field v-model="password" label="Password" />
+            <v-btn primary @click="encrypting"> Encrypting! </v-btn>
+
+            <p>msg: {{ plaintext }}</p>
+            <p>pass: {{ password }}</p>
+            <p>cipher: {{ cipher }}</p>
+          </v-col>
+          <v-col>
+            <v-text-field v-model="cipher" label="Cipher text" />
+            <v-text-field v-model="password" label="Password" />
+            <v-btn primary @click="decrypting"> Decrypting! </v-btn>
+            <p>cipher: {{ cipher }}</p>
+
+            <p>pass: {{ password }}</p>
+            <p>result: {{ result }}</p>
+          </v-col>
+        </v-row>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import cryptoJs from "crypto-js"
+const CryptoJS = require("crypto-js")
 
 export default {
-  data () {
+  data() {
     return {
-      candidateName: '',
-      username: 'pontep'
+      candidateName: "",
+      username: "pontep",
+      plaintext: "",
+      cipher: "",
+      password: "",
+      result: "",
     }
   },
   methods: {
-    async testServer(){
-      try{
-        const data = await this.$axios.$get('test')
-      console.log(data)
-      }catch(e){
+    encrypting() {
+      this.cipher = CryptoJS.AES.encrypt(
+        this.plaintext,
+        this.password
+      ).toString()
+    },
+    decrypting() {
+      try {
+        this.result = cryptoJs.AES.decrypt(this.cipher, this.password).toString(
+          cryptoJs.enc.Utf8
+        )
+      } catch (e) {
         console.log(e)
       }
-    }
+    },
+    async testServer() {
+      try {
+        const data = await this.$axios.$get("test")
+        console.log(data)
+      } catch (e) {
+        console.log(e)
+      }
+    },
   },
-  
 }
 </script>
 
