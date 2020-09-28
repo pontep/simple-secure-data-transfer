@@ -6,15 +6,15 @@
       <div class="text-center">
         <v-row>
           <v-col>
-            <v-text-field v-model="plaintext" label="Plain text" />
-            <v-text-field v-model="password" label="Password" />
-            <v-btn primary @click="encrypting"> Encrypting! </v-btn>
+            <v-text-field v-model="username" label="Your name" />
+            <v-text-field v-model="candidateName" label="Candidate name" />
+            <v-btn primary @click="vote">Vote </v-btn>
 
-            <p>msg: {{ plaintext }}</p>
+            <!-- <p>msg: {{ plaintext }}</p>
             <p>pass: {{ password }}</p>
-            <p>cipher: {{ cipher }}</p>
+            <p>cipher: {{ cipher }}</p> -->
           </v-col>
-          <v-col>
+          <!-- <v-col>
             <v-text-field v-model="cipher" label="Cipher text" />
             <v-text-field v-model="password" label="Password" />
             <v-btn primary @click="decrypting"> Decrypting! </v-btn>
@@ -22,7 +22,7 @@
 
             <p>pass: {{ password }}</p>
             <p>result: {{ result }}</p>
-          </v-col>
+          </v-col> -->
         </v-row>
       </div>
     </div>
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import sha256 from "crypto-js/sha256"
 import cryptoJs from "crypto-js"
 const CryptoJS = require("crypto-js")
 
@@ -38,18 +39,26 @@ export default {
     return {
       candidateName: "",
       username: "pontep",
-      plaintext: "",
-      cipher: "",
-      password: "",
-      result: "",
+      password: "pontep1234",
     }
   },
   methods: {
-    encrypting() {
-      this.cipher = CryptoJS.AES.encrypt(
-        this.plaintext,
-        this.password
-      ).toString()
+    async vote() {
+      try {
+        const body = {
+          username: this.username,
+          candidateName: this.candidateName,
+        }
+        body.hash = sha256(JSON.stringify(body)).toString()
+        const encryptedBody = this.encrypting(JSON.stringify(body))
+        const result = await this.$axios.$post("vote", { encryptedBody })
+        console.log(result)
+      } catch (e) {
+        console.log(e)
+      }
+    },
+    encrypting(item) {
+      return CryptoJS.AES.encrypt(item, this.password).toString()
     },
     decrypting() {
       try {
