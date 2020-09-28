@@ -1,13 +1,13 @@
-package com.pontep.simplesecurefullstack;
+package com.pontep.simpleFullstackSecure;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SimpleSecureFullstackApplication {
+public class SimpleFullstackSecureApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SimpleSecureFullstackApplication.class, args);
+		SpringApplication.run(SimpleFullstackSecureApplication.class, args);
 	}
 
 }
