@@ -8,7 +8,9 @@
       <div class="text-center">
         <input v-model="candidateName" type="text">
         {{ candidateName }}
-        <button @click="testServer">test</button>
+        <button @click="testServer">
+          test
+        </button>
       </div>
     </div>
   </div>
@@ -25,8 +27,12 @@ export default {
   },
   methods: {
     async testServer(){
-      const data = await this.$axios.$get('test')
+      try{
+        const data = await this.$axios.$get('test')
       console.log(data)
+      }catch(e){
+        console.log(e)
+      }
     }
   },
   
