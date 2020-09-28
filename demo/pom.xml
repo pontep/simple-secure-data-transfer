@@ -13,12 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
-	<repositories>
-		<repository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
-		</repository>
-	</repositories>
+
 
 	<properties>
 		<java.version>11</java.version>
@@ -74,6 +69,12 @@
 	</dependencies>
 
 	<build>
+		<repositories>
+			<repository>
+				<id>jitpack.io</id>
+				<url>https://jitpack.io</url>
+			</repository>
+		</repositories>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

@@ -51,7 +51,9 @@ export default {
         }
         body.hash = sha256(JSON.stringify(body)).toString()
         const encryptedBody = this.encrypting(JSON.stringify(body))
-        const result = await this.$axios.$post("vote", { encryptedBody })
+        console.log("encrypted: " + encryptedBody)
+        console.log("decrypted: " + this.decrypting(encryptedBody))
+        const result = await this.$axios.$post("vote", encryptedBody)
         console.log(result)
       } catch (e) {
         console.log(e)
@@ -60,9 +62,9 @@ export default {
     encrypting(item) {
       return CryptoJS.AES.encrypt(item, this.password).toString()
     },
-    decrypting() {
+    decrypting(item) {
       try {
-        this.result = cryptoJs.AES.decrypt(this.cipher, this.password).toString(
+        return cryptoJs.AES.decrypt(item, this.password).toString(
           cryptoJs.enc.Utf8
         )
       } catch (e) {

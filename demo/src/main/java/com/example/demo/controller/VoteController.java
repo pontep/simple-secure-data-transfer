@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.repository.VoteRepository;
+import org.apache.tomcat.util.net.openssl.ciphers.Encryption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,8 @@ public class VoteController {
     @PostMapping("/vote")
     public ResponseEntity<?> newVote(@RequestBody String encryptedBody){
         System.out.println("Received: "+encryptedBody.toString());
-//        Alice alice = new Alice()
+
+
         return ResponseEntity.ok().body("Vote successfully.");
     }
 }
