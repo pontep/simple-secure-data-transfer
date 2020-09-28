@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
+@CrossOrigin(origins = "*")
 @RequestMapping("/api")
 @RestController
 public class VoteController {

@@ -19,5 +19,8 @@ public class Vote {
     private Long id;
 
     @NotNull
+    private String username;
+
+    @NotNull
     private String candidateName;
 }

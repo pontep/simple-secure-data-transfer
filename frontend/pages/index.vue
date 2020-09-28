@@ -8,18 +8,28 @@
       <div class="text-center">
         <input v-model="candidateName" type="text">
         {{ candidateName }}
+        <button @click="testServer">test</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   data () {
     return {
-      candidateName: ''
+      candidateName: '',
+      username: 'pontep'
     }
-  }
+  },
+  methods: {
+    async testServer(){
+      const data = await this.$axios.$get('test')
+      console.log(data)
+    }
+  },
+  
 }
 </script>
 
