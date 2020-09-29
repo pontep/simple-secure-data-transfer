@@ -22,8 +22,18 @@ public class VoteController {
     @PostMapping("/vote")
     public ResponseEntity<?> newVote(@RequestBody String encryptedBody){
         System.out.println("Received: "+encryptedBody.toString());
-
-
+        AliceContext aliceContext = new AliceContextBuilder()
+                .setAlgorithm(AliceContext.Algorithm.AES)
+                .setMode(AliceContext.Mode.CBC) // or AliceContext.Mode.CTR
+                .setIvLength(16)
+                .build();
+        Alice alice = new Alice(aliceContext);
+        try{
+            String decryptedBytes = alice.decrypt(encryptedBody.getBytes(), "pontep1234".toCharArray()).toString();
+            System.out.println("Decrypted: " + decryptedBytes);
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        }
         return ResponseEntity.ok().body("Vote successfully.");
     }
 }
