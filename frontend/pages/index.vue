@@ -32,6 +32,7 @@
 <script>
 import sha256 from "crypto-js/sha256"
 import cryptoJs from "crypto-js"
+// import { encrypt } from "din/encrypt"
 const CryptoJS = require("crypto-js")
 
 export default {
@@ -50,9 +51,10 @@ export default {
           candidateName: this.candidateName,
         }
         body.hash = sha256(JSON.stringify(body)).toString()
-        const encryptedBody = this.encrypting(JSON.stringify(body))
+        const encryptedBody = this.encrypt(JSON.stringify(body))
+        // const encryptedBody = this.encrypting(JSON.stringify(body))
         console.log("encrypted: " + encryptedBody)
-        console.log("decrypted: " + this.decrypting(encryptedBody))
+        // console.log("decrypted: " + this.decrypting(encryptedBody))
         const result = await this.$axios.$post("vote", encryptedBody)
         console.log(result)
       } catch (e) {
