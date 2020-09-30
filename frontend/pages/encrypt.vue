@@ -2,13 +2,17 @@
   <div class="container">
     <div>
       <Logo />
-      <h1 class="title">Vote Candidate Now!</h1>
+      <h1 class="title">
+        Vote Candidate Now!
+      </h1>
       <div class="text-center">
         <v-row>
           <v-col>
             <v-text-field v-model="username" label="Your name" />
             <v-text-field v-model="candidateName" label="Candidate name" />
-            <v-btn primary @click="vote">Vote </v-btn>
+            <v-btn primary @click="vote">
+              Vote
+            </v-btn>
 
             <!-- <p>msg: {{ plaintext }}</p>
             <p>pass: {{ password }}</p>
@@ -30,6 +34,8 @@
 </template>
 
 <script>
+/* eslint-disable no-console */
+
 import sha256 from "crypto-js/sha256"
 import cryptoJs from "crypto-js"
 import encrypt from "@/din/encrypt"
