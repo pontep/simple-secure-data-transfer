@@ -1,11 +1,12 @@
 package com.example.demo.controller;
-
-import com.example.demo.encryption.AES;
 import com.example.demo.repository.VoteRepository;
-import org.apache.tomcat.util.net.openssl.ciphers.Encryption;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.crypto.Cipher;
+import java.util.Base64;
 
 
 @CrossOrigin(origins = "*")
@@ -23,10 +24,20 @@ public class VoteController {
 
     @PostMapping("/vote")
     public ResponseEntity<?> newVote(@RequestBody String encryptedBody){
-        System.out.println("Received: "+encryptedBody.toString());
 
-        String decrypted = AES.decrypt(encryptedBody.toString(), "pontep1234");
-        System.out.println("Decrypted: " + decrypted);
-        return ResponseEntity.ok().body("Vote successfully.");
+        try
+        {
+            System.out.println("received: " + encryptedBody);
+
+//            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS7PADDING");
+//            cipher.init(Cipher.DECRYPT_MODE, "dinza");
+//            String result = cipher.doFinal(Base64.getDecoder().decode(strToDecrypt));
+            return ResponseEntity.ok().body("Vote successfully.");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("vote error.");
+        }
+
     }
 }
