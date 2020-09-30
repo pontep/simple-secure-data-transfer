@@ -25,25 +25,35 @@ export default {
     // Simple usage
     "@nuxtjs/vuetify",
     "@nuxtjs/eslint-module",
-    [
-      "@nuxtjs/firebase",
-      {
-        config: {
-          apiKey: "<apiKey>",
-          authDomain: "<authDomain>",
-          databaseURL: "<databaseURL>",
-          projectId: "<projectId>",
-          storageBucket: "<storageBucket>",
-          messagingSenderId: "<messagingSenderId>",
-          appId: "<appId>",
-          measurementId: "<measurementId>",
-        },
-        services: {
-          auth: true, // Just as example. Can be any other service.
-        },
-      },
-    ],
+    '@nuxtjs/pwa',
+    '@nuxtjs/firebase'
   ],
+  firebase: {
+    // ...
+    services: {
+      auth: {
+        ssr: true
+      }
+      // ...
+    }
+  },
+  pwa: {
+    // disable the modules you don't need
+    meta: false,
+    icon: false,
+    // if you omit a module key form configuration sensible defaults will be applied
+    // manifest: false,
+
+    workbox: {
+      importScripts: [
+        // ...
+        '/firebase-auth-sw.js'
+      ],
+      // by default the workbox module will not install the service worker in dev environment to avoid conflicts with HMR
+      // only set this true for testing and remember to always clear your browser cache in development
+      dev: false
+    }
+  },
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
