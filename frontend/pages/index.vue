@@ -4,6 +4,12 @@
       <Logo />
       <h1 class="title">Firebase - Vue - Nuxtjs</h1>
       <div>
+        <v-text-field label="E-mail" v-model="email"></v-text-field>
+        <v-text-field
+          label="Enter your password"
+          hint="At least 8 characters"
+          v-model="password"
+        ></v-text-field>
         <v-btn color="success" @click="createUser()"> createUser </v-btn>
       </div>
     </div>
@@ -11,39 +17,24 @@
 </template>
 
 <script>
-import handleError from "../din/handleError"
+import * as firebase from "firebase/app"
+import "firebase/auth"
+
 export default {
-  mounted() {},
+  data() {
+    return {
+      email: "",
+      password: "",
+    }
+  },
   methods: {
-    async createUser() {
-      try {
-        await this.$fireAuth.createUserWithEmailAndPassword(
-          "foo@foo.foo",
-          "test"
-        )
-      } catch (e) {
-        handleError.handleError(e)
-      }
-    },
-    async onAuthStateChangedAction({ commit, dispatch }, { authUser, claims }) {
-      if (!authUser) {
-        await dispatch("cleanupAction")
-
-        return
-      }
-
-      // you can request additional fields if they are optional (e.g. photoURL)
-      const { uid, email, emailVerified, displayName, photoURL } = authUser
-
-      commit("SET_USER", {
-        uid,
-        email,
-        emailVerified,
-        displayName,
-        photoURL, // results in photoURL being undefined for server auth
-        // use custom claims to control access (see https://firebase.google.com/docs/auth/admin/custom-claims)
-        isAdmin: claims.custom_claim,
-      })
+    createUser() {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then((data) => {
+          console.log(data)
+        })
     },
   },
 }
